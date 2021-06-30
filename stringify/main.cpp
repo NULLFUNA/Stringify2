@@ -40,10 +40,14 @@ inline QString	RemoveSpaces( QString sLine ){
 	return sResult;
 }
 
-void	glsl2cpp( QString sGLSL ){
+void	glsl2cpp( QString sGLSL, QString sOutput = "" ){
 
 	QString	sShaderName = sGLSL.split('.')[0];
+
 	QString	sResultFile = sShaderName + RESULT_EXTNAME;
+
+	if(sOutput != "")
+		sResultFile = sOutput;
 
 	QFile	qInput(sGLSL);
 	QFile	qOutput(sResultFile);
@@ -72,6 +76,8 @@ void	glsl2cpp( QString sGLSL ){
 
 }
 
+
+
 QStringList	GetFiles( const char* pchPath ) {
 	QDir qDirectory( pchPath );
 	return qDirectory.entryList(QStringList() << "*.glsl" ,QDir::Files);
@@ -88,7 +94,7 @@ int main(int argc, char *argv[])
 
 	//	Support for old stringify
 	if(argc == 3){
-		glsl2cpp(argv[1]);
+		glsl2cpp(argv[1], argv[2]);
 		return 0;
 	}
 
